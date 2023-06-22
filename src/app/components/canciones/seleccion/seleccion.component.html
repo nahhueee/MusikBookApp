@@ -1,0 +1,10 @@
+<div class="botones">
+  <button
+    *ngFor="let item of tiposCancion"
+    [ngClass]="item.activo ? 'activo' : ''"
+    mat-button color="primary"
+    (click)="Buscar(item.id)"
+    >
+    {{item.nombre}}
+  </button>
+</div>

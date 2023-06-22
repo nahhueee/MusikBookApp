@@ -1,0 +1,19 @@
+.cabecera{
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2e2e2e;
+}
+.cabecera p{
+  margin: 0%;
+  color: white;
+  font-size: 18px;
+  font-family: "Poppins-Light";
+}
+
+.radioGroup{
+  display: flex;
+  justify-content: center;
+}
+

@@ -1,0 +1,15 @@
+<div class="cabecera">
+  <p>Elije N° de compaces</p>
+</div>
+<mat-dialog-content class="mat-typography">
+  <mat-radio-group class="radioGroup" aria-label="Select an option" [(ngModel)]="CompasSeleccionado">
+    <mat-radio-button color="primary" value="4">4</mat-radio-button>
+    <mat-radio-button color="primary" value="8">8</mat-radio-button>
+    <mat-radio-button color="primary" value="16">16</mat-radio-button>
+  </mat-radio-group>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button class="btn-action" mat-flat-button color="primary" [mat-dialog-close]="CompasSeleccionado">ACEPTAR</button>
+  <button class="btn-action" mat-flat-button color="warn" [mat-dialog-close]="CompasSeleccionado" cdkFocusInitial>CANCELAR</button>
+</mat-dialog-actions>

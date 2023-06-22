@@ -1,0 +1,145 @@
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.full-width{
+  width: 100%;
+}
+
+.mdc-form-field>label{
+  font-size: 20px !important;
+}
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+/*#region FONTS*/
+@font-face {
+  font-family: "Poppins-Light";
+  src: url('../src/assets/fonts/Poppins-Light.ttf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+ }
+ @font-face {
+  font-family: "Poppins-Regular";
+  src: url('../src/assets/fonts/Poppins-Regular.ttf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+ }
+ @font-face {
+  font-family: "Roboto-Medium";
+  src: url('../src/assets/fonts/Roboto-Medium.ttf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url('../src/assets/fonts/Roboto-Regular.ttf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto-Bold";
+  src: url('../src/assets/fonts/Roboto-Bold.ttf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Quantum";
+  src: url('../src/assets/fonts/Quantum.otf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "LEMONMILK";
+  src: url('../src/assets/fonts/LEMONMILK-Medium.otf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+/*#endregion */
+
+
+/*#region BOTONES ABM*/
+.abmc .botones{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.botones button{
+  display: flex;
+  align-items: center;
+  max-height: 40px;
+}
+.botones mat-icon{
+  margin-right: 5px;
+}
+
+@media only screen and (max-width: 767px){
+  .botones{
+    margin-top: 10px;
+    justify-content: center;
+  }
+}
+/*#endregion */
+
+/*#region Configuraciones globales para TABLAS*/
+.mat-header-cell{
+  font-size: 15px;
+}
+.mat-row:hover {
+  background: var(--color-row) !important;
+}
+.table-container{
+  margin: 15px 0px;
+}
+.ppalTable{
+  max-height: 500px;
+  overflow: auto;
+}
+
+mat-paginator{
+  margin-top: 10px;
+}
+
+//Configuración de la tabla para dispositivos Móviles
+@media only screen and (max-width: 767px){
+  .mat-header-cell{
+    margin-right: 5px;
+  }
+  .mat-cell{
+    margin-right: 5px;
+    height: 80px;
+  }
+  .ppalTable{
+    max-height: 300px;
+    overflow: auto;
+  }
+}
+/*#endregion */
+
+/*#region NOTIFICACIONES*/
+.toast-error{
+  background-color: #DC3545 !important;
+}
+.toast-warning{
+  background-color: #ff9152 !important;
+}
+.toast-success{
+  background-color: #28A745 !important;
+}
+
+.toast-container .ngx-toastr{
+  box-shadow: none !important;
+}
+.toast-title{
+  letter-spacing: normal !important;
+  text-transform: uppercase;
+  font-size: 18px !important;
+  font-family: 'Poppins-Light' !important;
+  font-weight: normal !important;
+}
+.toast-close-button{
+  font-weight: normal !important;
+}
+/*#endregion */

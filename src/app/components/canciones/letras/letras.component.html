@@ -1,0 +1,39 @@
+<div class="contenedor">
+  <form [formGroup]="formulario">
+    <div formArrayName="secciones">
+      <div *ngFor="let seccion of secciones.controls ; let i = index">
+
+        <div class="secciones">
+          <div [formGroupName]="i" class="full-width">
+
+            <!-- Nombre de la sección - Boton borrar sección -->
+            <div class="titulo-seccion">
+              <mat-icon (click)="BorrarSeccion(i)" matTooltip="Borrar Sección">dangerous</mat-icon>
+              <input type="text" formControlName="tipo">
+            </div>
+
+            <!-- Letra -->
+            <mat-form-field appearance="outline" class="full-width">
+              <textarea appTextareaAutoresize matInput placeholder="Escribe la letra" formControlName="letra"></textarea>
+            </mat-form-field>
+
+          </div>
+
+          <div class="nav">
+            <button mat-button (click)="SubirItem(i)"[disabled]="(i + 1) == 1"><mat-icon>expand_less</mat-icon></button>
+            <button mat-button (click)="BajarItem(i)" [disabled]="(i + 1) == secciones.controls.length"><mat-icon>expand_more</mat-icon></button>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </form>
+
+  <!-- Boton añadir nueva sección -->
+  <button class="btnPrincipal" mat-stroked-button color="primary" [matMenuTriggerFor]="menu" yPosition="before"><mat-icon>add_circle</mat-icon>SECCIÓN</button>
+  <mat-menu #menu="matMenu">
+    <button *ngFor="let item of tiposSeccion" mat-menu-item (click)="AnadirSeccion(item)">{{item.nombre}}</button>
+  </mat-menu>
+</div>
+
