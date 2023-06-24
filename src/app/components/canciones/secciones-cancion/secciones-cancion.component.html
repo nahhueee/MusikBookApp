@@ -43,13 +43,27 @@
   </mat-tab>
   <mat-tab label="ACORDES">
     <!-- #region ACORDES SECCION -->
-      <div *ngFor="let seccion of secciones.controls; let i = index">
-        <p>{{seccion.value.tipo}}</p>
-        <pre>{{seccion.value.letra}}</pre>
+      <div class="seccion-acorde" *ngFor="let seccion of secciones.controls; let i_seccion = index">
+        <p>𝅘𝅥𝅮 {{seccion.value.tipo}}</p>
 
-        <!-- Recorro cada letra y las pongo en un span para poder poner acordes en cada una -->
-        <div class="seccion">
-          <span *ngFor="let item of ArrayLetra(seccion.value.letra); let i = index" class="letra">{{item}}</span>
+        <div *ngFor="let renglon of ObtenerRenglonesTexto(seccion.value.letra); let i_renglon = index">
+          <div class="cuadricula">
+
+            <div class="cuadro-superior" *ngFor="let cuadro of [].constructor(renglon.length + 2); let i_cuadro = index">
+              <span *ngIf="!ExisteAcorde(i_seccion, i_renglon, i_cuadro)" class="cuadro">+</span>
+              <div *ngIf="indiceAcorde!=-1">
+                <span class="cuadro">C</span>
+                <input #inputAcorde class="acorde" type="text" [value]="acordesCancion[indiceAcorde].acorde" (input)="AjustarTamanioInput()" [style.width]="tamanioInput + 'ch'">
+              </div>
+
+            </div>
+            <!-- <span class="cuadro" *ngFor="let cuadro of [].constructor(renglon.length + 2); let i_cuadro = index"
+            formControlName="{{i_seccion}}{{i_renglon}}{{i_cuadro}}">+</span> -->
+
+
+
+          </div>
+          <p class="renglon"><span>N</span>{{renglon}}<span>N</span></p>
         </div>
       </div>
     <!-- #endregion -->

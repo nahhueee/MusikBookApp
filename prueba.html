@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Agregar acordes a la letra de una canción con Canvas</title>
+  <style>
+    #lyrics-container {
+      position: relative;
+    }
+
+    #myCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="lyrics-container">
+    <canvas id="myCanvas" width="500" height="200"></canvas>
+    <p id="lyrics">Letra de la canción</p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      var lyrics = document.getElementById('lyrics');
+
+      // Definir los acordes y su posición
+      var chords = [
+        { chord: 'C', x: 100, y: 50 },
+        { chord: 'Am', x: 200, y: 100 },
+        { chord: 'F', x: 300, y: 150 },
+        // Agrega más acordes y sus posiciones según sea necesario
+      ];
+
+      // Dibujar los acordes en el canvas
+      for (var i = 0; i < chords.length; i++) {
+        var chord = chords[i].chord;
+        var x = chords[i].x;
+        var y = chords[i].y;
+
+        context.fillStyle = 'black';
+        context.font = 'bold 16px Arial';
+        context.fillText(chord, x, y); // Dibujar el acorde en el canvas
+      }
+    });
+  </script>
+</body>
+</html>
