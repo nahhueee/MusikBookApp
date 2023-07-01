@@ -7,7 +7,6 @@ import { Cancion } from 'src/app/models/Cancion';
 import { FiltroCanciones } from 'src/app/models/FiltroCanciones';
 import { Paginacion } from 'src/app/models/Paginacion';
 import { CancionesService } from 'src/app/services/canciones.service';
-import { CancionesAddmodComponent } from '../canciones-addmod/canciones-addmod.component';
 
 @Component({
   selector: 'app-canciones',
@@ -24,31 +23,12 @@ export class CancionesComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator; //Para manejar el Paginador del front
   @ViewChild(MatSort) sort: MatSort; //Para manejar el Reordenar del front
 
-  dialogConfig = new MatDialogConfig(); //Creamos un modal para las operaciones ABM
-
   constructor(
-    private cancionesService:CancionesService,
-    private dialog: MatDialog,){}
+    private cancionesService:CancionesService){}
 
 
   ngAfterViewInit() {
     this.paginator._intl.itemsPerPageLabel = 'Items por página';
-  }
-
-  Agregar(){
-
-    this.dialogConfig.data = {cancion:''};
-    this.dialogConfig.disableClose = true;
-    this.dialogConfig.autoFocus = true;
-    this.dialogConfig.height = "auto";
-    this.dialogConfig.width = "900px";
-
-    this.dialog.open(CancionesAddmodComponent, this.dialogConfig)
-                .afterClosed()
-                .subscribe((actualizar:boolean) => {
-                  if (actualizar)
-                  this.Buscar(); //Recarga la tabla
-                });;
   }
 
   Buscar(event?: PageEvent, tipoCancion?:number){

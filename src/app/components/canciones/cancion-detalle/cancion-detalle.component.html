@@ -49,18 +49,19 @@
         <div *ngFor="let renglon of ObtenerRenglonesTexto(seccion.value.letra); let i_renglon = index">
           <div class="cuadricula">
 
-            <div class="cuadro-superior" *ngFor="let cuadro of [].constructor(renglon.length + 2); let i_cuadro = index">
-              <span *ngIf="!ExisteAcorde(i_seccion, i_renglon, i_cuadro)" class="cuadro">+</span>
+          <div class="cuadro" *ngFor="let cuadro of [].constructor(renglon.length + 2); let i_cuadro = index">
+
+              <span *ngIf="ObtenerIndexUbicacion(i_seccion, i_renglon, i_cuadro)==-1" class="no-acorde" (click)="AbrirInput(i_seccion, i_renglon, i_cuadro, true)">+</span>
               <div *ngIf="indiceAcorde!=-1">
-                <span class="cuadro">C</span>
-                <input #inputAcorde class="acorde" type="text" [value]="acordesCancion[indiceAcorde].acorde" (input)="AjustarTamanioInput()" [style.width]="tamanioInput + 'ch'">
+
+                <span class="acorde" (click)="AbrirInput(i_seccion, i_renglon, i_cuadro, false)">{{acordesCancion[indiceAcorde].acorde}}</span>
+                <input #inputAcorde class="input-acorde" type="text" uppercase
+                  *ngIf="acordesCancion[indiceAcorde].inputAbierto"
+                  (blur)="CerrarInput(i_seccion, i_renglon, i_cuadro)"
+                  [value]="acordesCancion[indiceAcorde].acorde">
+
               </div>
-
             </div>
-            <!-- <span class="cuadro" *ngFor="let cuadro of [].constructor(renglon.length + 2); let i_cuadro = index"
-            formControlName="{{i_seccion}}{{i_renglon}}{{i_cuadro}}">+</span> -->
-
-
 
           </div>
           <p class="renglon"><span>N</span>{{renglon}}<span>N</span></p>

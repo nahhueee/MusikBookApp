@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Otros
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { ToastrModule } from 'ngx-toastr';
 
 //Angular Material
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -29,24 +29,20 @@ import {MatRadioModule} from '@angular/material/radio';
 
 import { CancionesComponent } from './components/canciones/canciones/canciones.component';
 import { SeleccionComponent } from './components/canciones/seleccion/seleccion.component';
-import { CancionesAddmodComponent } from './components/canciones/canciones-addmod/canciones-addmod.component';
-import { LetrasComponent } from './components/canciones/letras/letras.component';
 import { TextareaAutoresizeDirective } from './textarea-autoresize.directive';
 import { CompasComponent } from './components/canciones/compas/compas.component';
-import { AcordesComponent } from './components/canciones/acordes/acordes.component';
-import { SeccionesCancionComponent } from './components/canciones/secciones-cancion/secciones-cancion.component';
+import { CancionDetalleComponent } from './components/canciones/cancion-detalle/cancion-detalle.component';
+import { CancionAddmodComponent } from './components/canciones/cancion-addmod/cancion-addmod.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CancionesComponent,
     SeleccionComponent,
-    CancionesAddmodComponent,
-    LetrasComponent,
     TextareaAutoresizeDirective,
     CompasComponent,
-    AcordesComponent,
-    SeccionesCancionComponent
+    CancionDetalleComponent,
+    CancionAddmodComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +52,7 @@ import { SeccionesCancionComponent } from './components/canciones/secciones-canc
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    ToastrModule.forRoot(),
 
     MatSlideToggleModule,
     MatTableModule,
