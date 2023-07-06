@@ -25,6 +25,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatSelectModule} from '@angular/material/select';
 
 
 import { CancionesComponent } from './components/canciones/canciones/canciones.component';
@@ -67,7 +68,8 @@ import { CancionAddmodComponent } from './components/canciones/cancion-addmod/ca
     MatMenuModule,
     MatDialogModule,
     MatTooltipModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,20 +1,19 @@
-import { Acorde_Seccion } from "./acorde_seccion";
-
 export class Seccion{
-    id? : number;
-    idCancion?: number;
+    idSeccion?: number;
     idTipoSeccion?: number;
+    tipoSeccion?: string;
     letra?: string;
-    acordes: Array<Acorde_Seccion> = new Array<Acorde_Seccion>();
+    accion?: string;
+    orden?: number
 
     constructor(data?: any) {
       if (data) {
-        this.id = data.id;
-        this.idCancion = data.idCancion;
+        this.idSeccion = data.idSeccion;
         this.idTipoSeccion = data.idTipoSeccion;
+        this.tipoSeccion = data.tipoSeccion;
         this.letra = data.letra;
-        // Si existen datos en data.acordes asignamos sus valores a nuestro array this.acordes, de lo contrario lo seteamos en nuevo
-        data.acordes ? this.acordes = data.acordes.map(x => new Acorde_Seccion(x)) : this.acordes = new Array<Acorde_Seccion>();
+        this.accion = data.accion;
+        this.orden = data.orden;
       }
     }
   }

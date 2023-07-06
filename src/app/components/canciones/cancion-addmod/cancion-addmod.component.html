@@ -36,10 +36,33 @@
             </mat-form-field>
           </div>
 
+          <div class="col-sm-6">
+            <!--Categoria-->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Categoria</mat-label>
+              <mat-select formControlName="idCategoria">
+                <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nombre}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <!--Tipo Cancion-->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Tipo Canción</mat-label>
+              <mat-select formControlName="idTipo">
+                <mat-option *ngFor="let tipos of tiposCancion" [value]="tipos.id">{{tipos.nombre}}</mat-option>
+              </mat-select>
+              <mat-error>
+                Elige el tipo de canción
+              </mat-error>
+            </mat-form-field>
+          </div>
+
         </div>
 
         <div class="botones">
-          <button class="btnPrincipal" mat-raised-button color="primary" (click)="Guardar()"><mat-icon>save</mat-icon>Guardar</button>
+          <button id="btnGuardar" mat-raised-button color="primary" (click)="Guardar()"><mat-icon>save</mat-icon>Guardar</button>
+          <button id="btnCerrar" mat-raised-button color="warn"><mat-icon>close</mat-icon>Cerrar</button>
         </div>
       </form>
       <!-- #endregion -->

@@ -7,7 +7,7 @@
   gap: 10px;
 
   border-bottom: solid 1px #919191;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 .cabecera p{
   color: rgb(47, 47, 47);
@@ -29,15 +29,22 @@
 .botones{
   display: flex;
   justify-content: center;
+  gap: 10px;
+  margin-top: 10px
 }
-.btnPrincipal{
-  width: 50%;
-  height: 55px;
+.botones button{
+  height: 100px !important;
   font-size: 18px;
   font-family: "Poppins-Light";
   letter-spacing: 0pt;
 }
-.btnPrincipal mat-icon{
+.botones mat-icon{
   transform: scale(1.2);
+}
+#btnGuardar{
+  width: 70%;
+}
+#btnCerrar{
+  width: 30%;
 }
 

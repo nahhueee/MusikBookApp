@@ -6,13 +6,13 @@
         <div formArrayName="secciones">
           <div *ngFor="let seccion of secciones.controls; let i = index">
 
-            <div class="secciones">
+            <div class="secciones" *ngIf="seccion.value.accion!='B'">
               <div [formGroupName]="i" class="full-width">
 
                 <!-- Nombre de la sección - Boton borrar sección -->
                 <div class="titulo-seccion">
                   <mat-icon (click)="BorrarSeccion(i)" matTooltip="Borrar Sección">dangerous</mat-icon>
-                  <input type="text" formControlName="tipo">
+                  <input type="text" formControlName="tipoSeccion" readonly>
                 </div>
 
                 <!-- Letra -->
@@ -41,10 +41,11 @@
     </div>
     <!-- #endregion -->
   </mat-tab>
+
   <mat-tab label="ACORDES">
     <!-- #region ACORDES SECCION -->
       <div class="seccion-acorde" *ngFor="let seccion of secciones.controls; let i_seccion = index">
-        <p>𝅘𝅥𝅮 {{seccion.value.tipo}}</p>
+        <p class="titulos">✦{{seccion.value.tipoSeccion}}</p>
 
         <div *ngFor="let renglon of ObtenerRenglonesTexto(seccion.value.letra); let i_renglon = index">
           <div class="cuadricula">

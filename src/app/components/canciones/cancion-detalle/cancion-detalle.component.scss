@@ -23,6 +23,7 @@
   color: #4b4b4b;
   border-left: 1px solid #c0c0c0;
   padding-left: 10px;
+  text-transform: uppercase;
 }
 .titulo-seccion mat-icon{
   transform: scale(1.1);
@@ -42,7 +43,7 @@
 }
 //#endregion
 
-// #region NUEVA SECCION
+// #region NUEVA SECCION / BOTON
 .btnPrincipal{
   width: 100%;
   height: 55px;
@@ -56,19 +57,27 @@
 // #endregion
 // #endregion
 
+// #region ACORDES
+.seccion-acorde{
+  padding: 10px;
+  border-bottom: 1px solid #f3f3f3;
+}
+.titulos{
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #4b4b4b;
+  margin-bottom: 0px;
+}
 
 .cuadricula{
   display: flex;
   margin-bottom: -5px;
-  margin-top: 3px;
-}
-.seccion-acorde{
-  padding: 10px;
+  margin-top: 2px;
 }
 .renglon{
   font-family: 'DMMono';
   font-size: 18px;
-  margin-bottom: 1px;
+  margin-bottom: 2px;
 }
 .renglon span{
   color: white;
@@ -122,3 +131,5 @@
   height: 21px;
   font-family: 'DMMono';
 }
+// #endregion
+
