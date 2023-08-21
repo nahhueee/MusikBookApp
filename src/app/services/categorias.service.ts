@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Categoria } from '../models/Categoria';
+import { FiltroGeneral } from '../models/FiltroGeneral';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +14,17 @@ export class CategoriasService {
   constructor(private http:HttpClient) { }
 
   //#region OBTENER
-  // ObtenerTotalCategorias(filtro:FiltroGral) {
-  //   return this.http.post(this.apiUrl + 'rubros/total/', filtro)
-  //      .toPromise()
-  //      .then((result:any) => {return result;});
-  // }
+  ObtenerTotalCategorias(filtro:FiltroGeneral) {
+    return this.http.post(this.apiUrl + 'categorias/ObtenerTotal/', filtro)
+       .toPromise()
+       .then((result:any) => {return result;});
+  }
 
-  // ObtenerCategorias(filtro:FiltroGral) {
-  //   return this.http.post(this.apiUrl + 'rubros/', filtro)
-  //      .toPromise()
-  //      .then((result:any) => {return result;});
-  // }
+  ObtenerCategorias(filtro:FiltroGeneral) {
+    return this.http.post(this.apiUrl + 'categorias/ObtenerTodas', filtro)
+       .toPromise()
+       .then((result:any) => {return result;});
+  }
 
   ObtenerCategoriasSelector() {
     return this.http.get(this.apiUrl + 'categorias/ObtenerSelector')
@@ -31,8 +32,14 @@ export class CategoriasService {
        .then((result:any) => {return result;});
   }
 
-  ObtenerCategoria(categoria:number) {
-    return this.http.get(this.apiUrl + `categorias/${categoria}`)
+  ObtenerCancion(cancion:number) {
+    return this.http.get(this.apiUrl + `categorias/ObtenerUna?id=${cancion}`)
+       .toPromise()
+       .then((result:any) => {return result;});
+  }
+
+  ConsultarExistencia(nombre?:string, tipo?:number) {
+    return this.http.get(this.apiUrl + `categorias/ExisteCategoria?nombre=${nombre}`)
        .toPromise()
        .then((result:any) => {return result;});
   }

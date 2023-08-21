@@ -36,6 +36,8 @@ import { CancionDetalleComponent } from './components/canciones/cancion-detalle/
 import { CancionAddmodComponent } from './components/canciones/cancion-addmod/cancion-addmod.component';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
 import { PreferenciasComponent } from './components/preferencias/preferencias.component';
+import { CategoriasComponent } from './components/categorias/categorias/categorias.component';
+import { CategoriasAddmodComponent } from './components/categorias/categorias-addmod/categorias-addmod.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { PreferenciasComponent } from './components/preferencias/preferencias.co
     CancionDetalleComponent,
     CancionAddmodComponent,
     NavegacionComponent,
-    PreferenciasComponent
+    PreferenciasComponent,
+    CategoriasComponent,
+    CategoriasAddmodComponent
   ],
   imports: [
     BrowserModule,
