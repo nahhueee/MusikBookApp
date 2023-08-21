@@ -6,16 +6,21 @@ import { CancionAddmodComponent } from './components/canciones/cancion-addmod/ca
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/inicio',
+    redirectTo: '/canciones',
     pathMatch: 'full'
   },
   {
-    path: 'inicio',
+    path: 'canciones',
     component:CancionesComponent,
   },
   {
-    path: 'addmod',
+    path: 'canciones/:tipo/:cancion',
     component:CancionAddmodComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '/canciones',
+    pathMatch: 'full'
   },
 ];
 

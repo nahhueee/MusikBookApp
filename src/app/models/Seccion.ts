@@ -1,19 +1,25 @@
 export class Seccion{
-    idSeccion?: number;
+    posicion?: number;
     idTipoSeccion?: number;
     tipoSeccion?: string;
     letra?: string;
     accion?: string;
-    orden?: number
+    cambioPosicion?: boolean;
+    
+    id?:number;
+    idCancion?:number;
 
     constructor(data?: any) {
       if (data) {
-        this.idSeccion = data.idSeccion;
+        this.posicion = data.posicion;
         this.idTipoSeccion = data.idTipoSeccion;
         this.tipoSeccion = data.tipoSeccion;
         this.letra = data.letra;
         this.accion = data.accion;
-        this.orden = data.orden;
+        this.cambioPosicion = data.cambioPosicion;
+       
+        this.id = data.id;
+        this.idCancion = data.idCancion;
       }
     }
   }

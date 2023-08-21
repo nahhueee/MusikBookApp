@@ -10,7 +10,7 @@ export class NotificacionesService {
 
   success(mensaje:string, titulo?:string){
     this.toastr.success(mensaje, titulo!=null?titulo:'Éxito', {
-      timeOut: 6000,
+      timeOut: 7000,
       closeButton: true,
       progressBar: true,
       positionClass: 'toast-bottom-right',

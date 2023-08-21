@@ -34,6 +34,8 @@ import { TextareaAutoresizeDirective } from './textarea-autoresize.directive';
 import { CompasComponent } from './components/canciones/compas/compas.component';
 import { CancionDetalleComponent } from './components/canciones/cancion-detalle/cancion-detalle.component';
 import { CancionAddmodComponent } from './components/canciones/cancion-addmod/cancion-addmod.component';
+import { NavegacionComponent } from './components/navegacion/navegacion.component';
+import { PreferenciasComponent } from './components/preferencias/preferencias.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { CancionAddmodComponent } from './components/canciones/cancion-addmod/ca
     TextareaAutoresizeDirective,
     CompasComponent,
     CancionDetalleComponent,
-    CancionAddmodComponent
+    CancionAddmodComponent,
+    NavegacionComponent,
+    PreferenciasComponent
   ],
   imports: [
     BrowserModule,

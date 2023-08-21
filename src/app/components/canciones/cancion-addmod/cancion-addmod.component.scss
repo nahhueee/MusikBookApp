@@ -10,16 +10,20 @@
   margin-bottom: 20px;
 }
 .cabecera p{
-  color: rgb(47, 47, 47);
   font-size: 22px;
   font-family: "Poppins-Light";
   margin: 0%;
 }
 .cabecera mat-icon{
   //color: var(--color-primary) !important;
-  color: rgb(53, 94, 255);
+  color: var(--color-primary);
   transform: scale(1.3);
 }
+
+.texto{
+  text-transform: uppercase;
+}
+
 
 #tabs{
   margin-top: 1px;

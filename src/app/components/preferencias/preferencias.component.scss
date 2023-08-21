@@ -1,0 +1,23 @@
+.cabecera{
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #2e2e2e;
+  }
+  .cabecera p{
+    margin: 0%;
+    color: white;
+    font-size: 18px;
+    font-family: "Poppins-Light";
+  }
+  .cabecera mat-icon{
+    color: var(--color-primary) !important;
+    margin-right: 5px;
+  }
+
+  mat-slide-toggle{
+    font-size: 10px;
+    font-family: 'Poppins-Regular';
+    margin-bottom: 25px;
+  }

@@ -6,7 +6,7 @@
 
     <!-- Botones de acción -->
     <div class="order-2 col-sm-12 order-sm-2 col-md-8 order-md-1 col-lg-8 botones">
-      <button type="button" class="btn btn-success"><mat-icon>add_circle</mat-icon>Nueva Canción</button>
+      <button type="button" class="btn btn-success" (click)="NuevaCancion()"><mat-icon>add_circle</mat-icon>Nueva Canción</button>
     </div>
 
     <!-- Input de Busqueda -->
@@ -55,7 +55,7 @@
         <mat-cell mat-cell *matCellDef="let element">
           <div class="acciones">
             <mat-icon>library_add</mat-icon>
-            <mat-icon>edit</mat-icon>
+            <mat-icon (click)="EditarCancion(element.id)">edit</mat-icon>
             <mat-icon>backspace</mat-icon>
           </div>
         </mat-cell>
@@ -74,3 +74,4 @@
   </div>
   <!-- #endregion TABLA -->
 </div>
+

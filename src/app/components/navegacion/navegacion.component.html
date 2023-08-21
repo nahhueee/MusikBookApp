@@ -1,1 +1,18 @@
-<p>navegacion works!</p>
+<div class="nav">
+    <div class="links">
+        <img src="" alt="Logo">
+        <div class="link" (click)="Navegar('canciones')">
+            <mat-icon>library_music</mat-icon> Canciones
+        </div>
+        <div class="link" (click)="Navegar('canciones')">
+            <mat-icon>ballot</mat-icon> Listas
+        </div>
+        <div class="link" (click)="Navegar('canciones')">
+            <mat-icon>interests</mat-icon>Categorias
+        </div>
+    </div>
+    
+    <div class="link" (click)="Preferencias()">
+        <mat-icon>settings</mat-icon>
+    </div>
+</div>

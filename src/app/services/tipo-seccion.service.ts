@@ -12,7 +12,7 @@ export class TipoSeccionService {
 
   //#region OBTENER
   ObtenerTiposSeccion() {
-    return this.http.get(this.apiUrl + 'tipos_seccion/select')
+    return this.http.get(this.apiUrl + 'canciones/TipoSeccionSelector')
        .toPromise()
        .then((result:any) => {return result;})
   }

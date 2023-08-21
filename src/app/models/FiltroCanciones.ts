@@ -1,13 +1,15 @@
 import { Paginacion } from "./Paginacion";
 
 export class FiltroCanciones{
-  tipo?: number;
+  idTipoCancion?: number;
+  idCategoria?: number;
   nombre?: number;
   paginacion?: Paginacion = new Paginacion();
 
   constructor(data?: any) {
     if (data) {
-      this.tipo = data.tipo;
+      this.idTipoCancion = data.idTipoCancion;
+      this.idCategoria = data.idCategoria;
       this.nombre = data.nombre;
       this.paginacion = data.paginacion;
     }

@@ -1,0 +1,96 @@
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
+
+$mat-theme-ignore-duplication-warnings: true;
+
+/*#region Red-Theme*/
+$red-primary: mat.define-palette(mat.$red-palette, A400);
+$red-accent: mat.define-palette(mat.$red-palette, 500);
+
+$red-theme: mat.define-light-theme((color: (primary: $red-primary, accent: $red-accent)));
+$red-theme-dark: mat.define-dark-theme((color: (primary: $red-primary, accent: $red-accent)));
+
+.red-theme{
+  @include angular-material-color($red-theme);
+  --color-primary: #{mat.get-color-from-palette($red-primary)};
+  --color-accent: #{mat.get-color-from-palette($red-accent)};
+  --color-background: #f1f1f1;
+  --color-font: #3f3f3f;
+}
+.red-theme-dark{
+  @include angular-material-color($red-theme-dark);
+  --color-primary: #{mat.get-color-from-palette($red-primary)};
+  --color-accent: #{mat.get-color-from-palette($red-accent)};
+  --color-background: #212121;
+    color: white;
+}
+/*#endregion */
+
+/*#region Pink-Theme*/
+$pink-primary: mat.define-palette(mat.$pink-palette, A400);
+$pink-accent: mat.define-palette(mat.$pink-palette, 900);
+
+$pink-theme: mat.define-light-theme((color: (primary: $pink-primary, accent: $pink-accent)));
+$pink-theme-dark: mat.define-dark-theme((color: (primary: $pink-primary, accent: $pink-accent)));
+
+.pink-theme{
+  @include angular-material-color($pink-theme);
+  --color-primary: #{mat.get-color-from-palette($pink-primary)};
+  --color-accent: #{mat.get-color-from-palette($pink-accent)};
+  --color-background: #f1f1f1;
+  --color-font: #3f3f3f;
+}
+.pink-theme-dark{
+  @include angular-material-color($pink-theme-dark);
+  --color-primary: #{mat.get-color-from-palette($pink-primary)};
+  --color-accent: #{mat.get-color-from-palette($pink-accent)};
+  --color-background: #212121;
+    color: white;
+}
+/*#endregion */
+
+/*#region Blue-Theme*/
+$blue-primary: mat.define-palette(mat.$blue-palette, A400);
+$blue-accent: mat.define-palette(mat.$indigo-palette, 600);
+
+$blue-theme: mat.define-light-theme((color: (primary: $blue-primary, accent: $blue-accent)));
+$blue-theme-dark: mat.define-dark-theme((color: (primary: $blue-primary, accent: $blue-accent)));
+
+.blue-theme{
+  @include angular-material-color($blue-theme);
+  --color-primary: #{mat.get-color-from-palette($blue-primary)};
+  --color-accent: #{mat.get-color-from-palette($blue-accent)};
+  --color-background: #f1f1f1;
+  --color-font: #3f3f3f;
+}
+.blue-theme-dark{
+  @include angular-material-color($blue-theme-dark);
+  --color-primary: #{mat.get-color-from-palette($blue-primary)};
+  --color-accent: #{mat.get-color-from-palette($blue-accent)};
+  --color-background: #212121;
+    color: white;
+}
+/*#endregion */
+
+/*#region Green-Theme*/
+$green-primary: mat.define-palette(mat.$green-palette, 700);
+$green-accent: mat.define-palette(mat.$teal-palette, 800);
+
+$green-theme: mat.define-light-theme((color: (primary: $green-primary, accent: $green-accent)));
+$green-theme-dark: mat.define-dark-theme((color: (primary: $green-primary, accent: $green-accent)));
+
+.green-theme{
+  @include angular-material-color($green-theme);
+  --color-primary: #{mat.get-color-from-palette($green-primary)};
+  --color-accent: #{mat.get-color-from-palette($green-accent)};
+  --color-background: #f1f1f1;
+  --color-font: #3f3f3f;
+}
+.green-theme-dark{
+  @include angular-material-color($green-theme-dark);
+  --color-primary: #{mat.get-color-from-palette($green-primary)};
+  --color-accent: #{mat.get-color-from-palette($green-accent)};
+  --color-background: #212121;
+    color: white;
+}
+/*#endregion */

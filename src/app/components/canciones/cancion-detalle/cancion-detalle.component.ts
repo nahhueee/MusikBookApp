@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TipoSeccion } from 'src/app/models/TipoSeccion';
@@ -6,8 +6,12 @@ import { TipoSeccionService } from 'src/app/services/tipo-seccion.service';
 import { CompasComponent } from '../compas/compas.component';
 import { Acorde } from 'src/app/models/Acorde';
 import { DisparadorService } from 'src/app/services/disparador.service';
-import { DetalleCancion } from 'src/app/models/Detalle_Cancion';
 import { Seccion } from 'src/app/models/Seccion';
+import { ActivatedRoute } from '@angular/router';
+import { Cancion } from 'src/app/models/Cancion';
+import { CancionesService } from 'src/app/services/canciones.service';
+import { NotificacionesService } from 'src/app/services/notificaciones.service';
+import { DetalleCancion } from 'src/app/models/DetallesCancion';
 
 @Component({
   selector: 'app-cancion-detalle',
@@ -15,7 +19,10 @@ import { Seccion } from 'src/app/models/Seccion';
   styleUrls: ['./cancion-detalle.component.scss']
 })
 export class CancionDetalleComponent {
-  @Input() IdCancion: number | undefined = 0;
+  seccionesCancion: Seccion[] = [];
+  acordesCancion: Acorde[] = [];
+
+  @Output() cancionGuardada = new EventEmitter();
 
   tiposSeccion: TipoSeccion[];
   formulario: FormGroup;
@@ -24,11 +31,8 @@ export class CancionDetalleComponent {
   indiceAcorde: number;
   lastAddedIndex: number = -1; // Variable para almacenar el índice del último input agregado
 
-  detallesCancion: DetalleCancion;
-  seccionesCancion: Seccion[] = [];
   seccionesCancionBorrar: Seccion[] = [];
-  acordesCancion: Acorde[] = [];
-
+  
   //Configuraciones del modal compaces
   dialogConfig = new MatDialogConfig();
 
@@ -36,21 +40,15 @@ export class CancionDetalleComponent {
     private dialog: MatDialog,
     private tipoSeccionService:TipoSeccionService,
     private formBuilder: FormBuilder,
-    private disparadorService: DisparadorService){
-
-      // Se suscribe al evento del disparador para guardar detalles de la canción
-      this.disparadorService.$GuardarDetallesCancion.subscribe((parametro) => {
-        this.IdCancion = parametro;
-        this.Guardar();
-      });
+    private disparadorService: DisparadorService,
+    private rutaActiva: ActivatedRoute,
+    private cancionService:CancionesService,
+    private Notificaciones: NotificacionesService){
 
       //Arma el formulario de secciones
       this.formulario = this.formBuilder.group({
         secciones: this.formBuilder.array([])
       });
-
-      this.acordesCancion = [{ubicacion: '0-1-2',  acorde: 'B', inputAbierto: false, accion: 'G'}]
-      this.seccionesCancion = [{idSeccion: 1, idTipoSeccion: 2, tipoSeccion: 'Verso', letra: 'Quien podrá separarme de ti Dios', accion: 'G'}]
   }
 
 
@@ -67,16 +65,25 @@ export class CancionDetalleComponent {
     this.dialogConfig.autoFocus = true;
     this.dialogConfig.height = "auto";
     this.dialogConfig.width = "300px";
+  }
+
+  ActualizarArray(_detalles:DetalleCancion){
+    this.seccionesCancion = _detalles.secciones;
+    this.acordesCancion = _detalles.acordes;
+    console.log(_detalles)
 
     //Llenamos la el form array con los datos de las letras de la cancion obtenidas de la DB
     for (let i = 0; i < this.seccionesCancion.length; i++) {
 
       const seccion = this.formBuilder.group({
-        idSeccion: new FormControl(this.seccionesCancion[i].idSeccion),
+        posicion: new FormControl(this.seccionesCancion[i].posicion),
         idTipoSeccion: new FormControl(this.seccionesCancion[i].idTipoSeccion),
         tipoSeccion: new FormControl(this.seccionesCancion[i].tipoSeccion),
         letra: new FormControl(this.seccionesCancion[i].letra),
-        accion: new FormControl(this.seccionesCancion[i].accion),
+        accion: new FormControl('G'),
+        cambioPosicion: new FormControl(false),
+        id: this.seccionesCancion[i].id,
+        idCancion: this.seccionesCancion[i].idCancion
       });
 
       this.secciones.push(seccion);
@@ -87,11 +94,11 @@ export class CancionDetalleComponent {
 
   //Abre el input de edicion de acorde en la ubicacion proporcionada
   //Pone el foco en el input abierto
-  AbrirInput(seccion:number, renglon:number, cuadro:number, nuevo:boolean) {
+  AbrirInput(idseccion:number, seccion:number, renglon:number, cuadro:number, nuevo:boolean) {
     if(nuevo){
       //Tengo que crear un nuevo elemento vacio para poder abrir el input en esa ubicación
       //Le asigamos la accion de I(Insertar) para luego agregarlo a la DB si tiene valor
-      this.acordesCancion.push({ubicacion: `${seccion}-${renglon}-${cuadro}`,  acorde: '', inputAbierto: false, accion: 'I'});
+      this.acordesCancion.push({idSeccion:idseccion, posSeccion:seccion, ubicacion: `${renglon}-${cuadro}`,  acorde: '', inputAbierto: false, accion: 'I'});
     }
 
     this.acordesCancion[this.ObtenerIndexUbicacion(seccion,renglon,cuadro)].inputAbierto = true;
@@ -134,7 +141,9 @@ export class CancionDetalleComponent {
   //Devuelve: <> -1 Significa que hay un acorde en esa ubicacion
   ObtenerIndexUbicacion(seccion:number, renglon:number, cuadro: number):number{
     if(this.acordesCancion.length>0){
-      let elemento = this.acordesCancion.findIndex(x=> x.ubicacion == `${seccion}-${renglon}-${cuadro}` );
+      // let elemento = this.acordesCancion.findIndex(x=> x.ubicacion == `${seccion}-${renglon}-${cuadro}` );
+      let elemento = this.acordesCancion.findIndex(x=> x.ubicacion == `${renglon}-${cuadro}` && x.posSeccion == seccion );
+
       if(elemento!=-1){
         this.indiceAcorde = elemento;
         return elemento;
@@ -160,6 +169,23 @@ export class CancionDetalleComponent {
       });
   }
 
+  ObtenerProximaPosicion():number{
+    var mayor = 0;
+
+    if(this.secciones.controls.length===0){
+      return mayor;
+    }else{
+      for(var i = 0; i < this.secciones.controls.length; i++){
+        if (this.secciones.controls[i].value.posicion > mayor)
+        {
+            mayor = this.secciones.controls[i].value.posicion;
+        }
+      }
+    }
+    
+    return mayor + 1;
+  }
+
   //Añade un nuevo campo de sección a la lista de secciones
   AnadirSeccion(tipoSeccion:TipoSeccion) {
     if(tipoSeccion.nombre == "INTRO" || tipoSeccion.nombre == "INTERLUDIO"){
@@ -174,22 +200,28 @@ export class CancionDetalleComponent {
                   if(CompasSeleccionado==4) letraCompas = "_ _ _ _ ";
 
                   const seccion = this.formBuilder.group({
-                    idSeccion: new FormControl(0),
+                    posicion: new FormControl(this.ObtenerProximaPosicion()),
                     idTipoSeccion: new FormControl(tipoSeccion.id),
                     tipoSeccion: new FormControl(tipoSeccion.nombre),
                     letra: new FormControl(letraCompas),
                     accion: new FormControl('I'),
+                    cambioPosicion: new FormControl(false),
+                    id: new FormControl(0),
+                    idCancion: new FormControl(0),
                   });
 
                   this.secciones.push(seccion);
                 });
     }else{
       const seccion = this.formBuilder.group({
-        idSeccion: new FormControl(0),
+        posicion: new FormControl(this.ObtenerProximaPosicion()),
         idTipoSeccion: new FormControl(tipoSeccion.id),
         tipoSeccion: new FormControl(tipoSeccion.nombre),
         letra: new FormControl(''),
         accion: new FormControl('I'),
+        cambioPosicion: new FormControl(false),
+        id: new FormControl(0),
+        idCancion: new FormControl(0),
       });
 
       this.secciones.push(seccion);
@@ -203,9 +235,26 @@ export class CancionDetalleComponent {
     //Si la seccion a borrar ya se encuentra guardada en la DB
     //lo agregamos a un array auxiliar para luego borrarla de la DB
     //y que no interfiera en el orden de las secciones
-    if(seccion.idSeccion!=0){
+    if(seccion.id!=0){
       seccion.accion = 'B';
       this.seccionesCancionBorrar.push(seccion);
+
+      //Pongo en estado B(Baja) los acordes relacionados a esta seccion guardada
+      this.acordesCancion.forEach(acorde => {
+        if (acorde.idSeccion === (seccion.id)) {
+          acorde.accion = "B";
+        }
+      });
+    }else{
+      
+      //Si la seccion no esta guardada en la DB
+      //Elimino del array acordes, todos los que esten asociados a 
+      //la posicion de esta seccion
+      this.acordesCancion.forEach(acorde => {
+        if (acorde.posSeccion === (item)) {
+          this.acordesCancion = this.acordesCancion.filter(x=> x.posSeccion != item)
+        }
+      });
     }
 
     this.secciones.removeAt(item)
@@ -214,15 +263,31 @@ export class CancionDetalleComponent {
   //Intercambia la posición del item por el item que esta a su izquierda en el array
   SubirItem(item:number){
     let aux = this.secciones.controls[item];
+
     this.secciones.controls[item] = this.secciones.controls[item-1];
     this.secciones.controls[item-1] = aux;
+
+    //Indicamos que las secciones cambiaron de posicion
+    this.secciones.controls[item].value.cambioPosicion = true;
+    this.secciones.controls[item].value.accion = "M"
+
+    this.secciones.controls[item-1].value.cambioPosicion = true;
+    this.secciones.controls[item-1].value.accion = "M"
   }
 
   // Intercambia la posición del item por el item que esta a su derecha en el array
   BajarItem(item:number){
     let aux = this.secciones.controls[item];
+
     this.secciones.controls[item] = this.secciones.controls[item+1];
     this.secciones.controls[item+1] = aux;
+
+    //Indicamos que las secciones cambiaron de posicion
+    this.secciones.controls[item].value.cambioPosicion = true;
+    this.secciones.controls[item].value.accion = "M"
+
+    this.secciones.controls[item+1].value.cambioPosicion = true;
+    this.secciones.controls[item+1].value.accion = "M"
   }
 
   //Obtiene el número de renglones que tiene un parrafo o seccion de la letra
@@ -237,29 +302,82 @@ export class CancionDetalleComponent {
     }
     return lineasTexto;
   }
+
+  //Revisa que la letra de una seccion que ya esta guardada fue modificada para luego actualizarña
+  LetraActualizada(seccion:number, posicion:number) {
+    if(seccion!=0){
+      this.secciones.controls[posicion].value.accion = 'M';
+    }
+  }
   //#endregion
 
   //#region GUARDADO DE DATOS
-  Guardar(){
-    this.detallesCancion = new DetalleCancion();
-
+  GuardarDetalles(cancion:Cancion, modificar:boolean){
+    
     //Llenamos el array de secciones con los valores del arrayForm
     this.seccionesCancion = [];
+    
     for (let i = 0; i < this.secciones.controls.length; i++) {
-      this.secciones.controls[i].value.orden = i; //Asignamos su orden actual
+      //Si la seccion cambió de posicion la ponemos para modificar
+      if(this.secciones.controls[i].value.cambioPosicion){this.secciones.controls[i].value.accion = "M"} 
+
       this.seccionesCancion.push(new Seccion(this.secciones.controls[i].value));
     }
     //Completamos el array de secciones con las que se van a eliminar
     for (let i = 0; i < this.seccionesCancionBorrar.length; i++) {
-      this.seccionesCancionBorrar[i].orden = -1; //Asignamos -1 porque se va a borrar
+      this.seccionesCancionBorrar[i].posicion = -1; //Asignamos -1 porque se va a borrar
       this.seccionesCancion.push(new Seccion(this.seccionesCancionBorrar[i]));
     }
 
-    this.detallesCancion.idCancion = this.IdCancion;
-    this.detallesCancion.secciones = this.seccionesCancion;
-    this.detallesCancion.acordes = this.acordesCancion;
+    var detallesCancion = new DetalleCancion();
+    detallesCancion.acordes = this.acordesCancion;
+    detallesCancion.secciones = this.seccionesCancion;
 
-    console.log(this.detallesCancion.secciones)
+    cancion.detalles = detallesCancion;
+
+    if(!modificar){
+      this.NuevaCancion(cancion);
+    }else{
+      this.ModificarCancion(cancion);
+    }
+  }
+
+  NuevaCancion(cancion:Cancion){
+    this.cancionService.Agregar(cancion)
+    .then(response => {
+      if(response>0){
+        this.seccionesCancion = [];
+        this.acordesCancion = [];
+        this.secciones.controls = [];
+        this.seccionesCancionBorrar = [];
+
+        //INFORMAR AL PADRE DEL GUARDADO 
+        this.cancionGuardada.emit(response);
+        this.Notificaciones.success("Nueva cancion agregada correctamente");
+      }
+    }).catch(err => {
+      this.Notificaciones.error("No se pudo guardar la canción");
+      console.log(err);
+  });
+  }
+
+  ModificarCancion(cancion:Cancion){
+    this.cancionService.Modificar(cancion)
+    .then(response => {
+      if(response==true){
+        this.seccionesCancion = [];
+        this.acordesCancion = [];
+        this.secciones.controls = [];
+        this.seccionesCancionBorrar = [];
+
+        //INFORMAR AL PADRE DEL GUARDADO 
+        this.cancionGuardada.emit(cancion.id);
+        this.Notificaciones.success("Canción modificada correctamente");
+      }
+    }).catch(err => {
+      this.Notificaciones.error("No se pudo guardar la canción");
+      console.log(err);
+  });
   }
   //#endregion
 }

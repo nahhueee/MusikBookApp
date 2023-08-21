@@ -12,12 +12,12 @@
                 <!-- Nombre de la sección - Boton borrar sección -->
                 <div class="titulo-seccion">
                   <mat-icon (click)="BorrarSeccion(i)" matTooltip="Borrar Sección">dangerous</mat-icon>
-                  <input type="text" formControlName="tipoSeccion" readonly>
+                  <input matInput type="text" formControlName="tipoSeccion" readonly>
                 </div>
 
                 <!-- Letra -->
                 <mat-form-field appearance="outline" class="full-width">
-                  <textarea appTextareaAutoresize matInput placeholder="Escribe la letra" formControlName="letra"></textarea>
+                  <textarea appTextareaAutoresize matInput placeholder="Escribe la letra" formControlName="letra" (input)="LetraActualizada(seccion.value.id, i)"></textarea>
                 </mat-form-field>
 
               </div>
@@ -50,22 +50,33 @@
         <div *ngFor="let renglon of ObtenerRenglonesTexto(seccion.value.letra); let i_renglon = index">
           <div class="cuadricula">
 
-          <div class="cuadro" *ngFor="let cuadro of [].constructor(renglon.length + 2); let i_cuadro = index">
+            <div class="cuadro" *ngFor="let cuadro of [].constructor(renglon.length + 2); let i_cuadro = index">
 
-              <span *ngIf="ObtenerIndexUbicacion(i_seccion, i_renglon, i_cuadro)==-1" class="no-acorde" (click)="AbrirInput(i_seccion, i_renglon, i_cuadro, true)">+</span>
+              
+              <!-- Revisa si en esta coordenada con la posicion de la seccion existe acorde -->
+              <!-- Span +, representa un lugar donde puedo agregar un acorde -->
+              <span *ngIf="ObtenerIndexUbicacion(seccion.value.posicion, i_renglon, i_cuadro)==-1" class="no-acorde" (click)="AbrirInput(seccion.value.id,seccion.value.posicion, i_renglon, i_cuadro, true)">+</span>
+
               <div *ngIf="indiceAcorde!=-1">
+                <!-- Agrego una letra detras del acorde para mantener la posicion de los demas "No-acorde" -->
+                <span class="no-acorde">N</span> 
 
-                <span class="acorde" (click)="AbrirInput(i_seccion, i_renglon, i_cuadro, false)">{{acordesCancion[indiceAcorde].acorde}}</span>
+                <!-- Muestro el acorde encontrado en la posición por sobre el span "N" -->
+                <span class="acorde" (click)="AbrirInput(seccion.value.id, seccion.value.posicion, i_renglon, i_cuadro, false)">{{acordesCancion[indiceAcorde].acorde}}</span>
+                
                 <input #inputAcorde class="input-acorde" type="text" uppercase
                   *ngIf="acordesCancion[indiceAcorde].inputAbierto"
-                  (blur)="CerrarInput(i_seccion, i_renglon, i_cuadro)"
+                  (blur)="CerrarInput(seccion.value.posicion, i_renglon, i_cuadro)"
+                  (keyup.enter)="CerrarInput(seccion.value.posicion, i_renglon, i_cuadro)"
                   [value]="acordesCancion[indiceAcorde].acorde">
 
               </div>
             </div>
 
           </div>
-          <p class="renglon"><span>N</span>{{renglon}}<span>N</span></p>
+
+          <!-- Agrego una letra al inicio y al final del renglon, para poder tener dos espacios mas a los costados -->
+          <p class="renglon"><span>R</span>{{renglon}}<span>R</span></p>
         </div>
       </div>
     <!-- #endregion -->

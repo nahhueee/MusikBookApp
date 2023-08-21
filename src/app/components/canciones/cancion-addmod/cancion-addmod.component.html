@@ -15,7 +15,7 @@
             <!-- Nombre -->
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Nombre</mat-label>
-              <input matInput type="text" formControlName="nombre">
+              <input matInput type="text" formControlName="nombre" class="texto">
               <mat-error>
                 Completa con un nombre
               </mat-error>
@@ -62,14 +62,14 @@
 
         <div class="botones">
           <button id="btnGuardar" mat-raised-button color="primary" (click)="Guardar()"><mat-icon>save</mat-icon>Guardar</button>
-          <button id="btnCerrar" mat-raised-button color="warn"><mat-icon>close</mat-icon>Cerrar</button>
+          <button id="btnCerrar" mat-raised-button color="warn" (click)="Cancelar()"><mat-icon>close</mat-icon>Cerrar</button>
         </div>
       </form>
       <!-- #endregion -->
   </div>
 
     <div class="col-sm-12 col-md-7">
-      <app-cancion-detalle [IdCancion]="cancion.id"></app-cancion-detalle>
+      <app-cancion-detalle (cancionGuardada)="CancionGuardada($event)"></app-cancion-detalle>
     </div>
   </div>
 </div>

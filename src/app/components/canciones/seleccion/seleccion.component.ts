@@ -29,7 +29,7 @@ export class SeleccionComponent {
         //Marco como activo el primer elemento
         this.tiposCancion[0].activo = true;
         //Emito el tipo de cancion n° 1
-        this.respuesta.emit(1)
+        this.respuesta.emit(this.tiposCancion[0])
       });
   }
 
@@ -42,6 +42,6 @@ export class SeleccionComponent {
     this.tiposCancion[indice].activo = true;
 
     //Emito el tipo de cancion elegido
-    this.respuesta.emit(tipoCancion)
+    this.respuesta.emit(this.tiposCancion[indice])
   }
 }

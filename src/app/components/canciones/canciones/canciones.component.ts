@@ -7,6 +7,7 @@ import { Cancion } from 'src/app/models/Cancion';
 import { FiltroCanciones } from 'src/app/models/FiltroCanciones';
 import { Paginacion } from 'src/app/models/Paginacion';
 import { CancionesService } from 'src/app/services/canciones.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-canciones',
@@ -16,6 +17,7 @@ import { CancionesService } from 'src/app/services/canciones.service';
 export class CancionesComponent {
   txtBusqueda:string="";
   canciones: Cancion[] =[];
+  cancionTipo: number;
 
   displayedColumns: string[] = ['nombre', 'tonica', 'bpm', 'id']; //Columnas a mostrar
   dataSource = new MatTableDataSource<Cancion>(this.canciones); //Data source de la tabla
@@ -24,15 +26,17 @@ export class CancionesComponent {
   @ViewChild(MatSort) sort: MatSort; //Para manejar el Reordenar del front
 
   constructor(
-    private cancionesService:CancionesService){}
+    private cancionesService:CancionesService,
+    private router: Router){}
 
 
   ngAfterViewInit() {
     this.paginator._intl.itemsPerPageLabel = 'Items por página';
   }
 
-  Buscar(event?: PageEvent, tipoCancion?:number){
-    console.log(tipoCancion)
+  Buscar(event?: PageEvent, tipoCancion?:any){
+    this.cancionTipo = tipoCancion.id;
+
     if (!event) {
       event = new PageEvent();
       event.pageIndex = 0;
@@ -46,7 +50,7 @@ export class CancionesComponent {
     });
 
     let filtroCanciones: FiltroCanciones = new FiltroCanciones({
-      tipo: tipoCancion,
+      idTipoCancion: tipoCancion.id,
       nombre: this.txtBusqueda,
       paginacion: paginacion
     })
@@ -83,5 +87,12 @@ export class CancionesComponent {
   LimpiarBusqueda(){
     this.txtBusqueda = "";
     this.Buscar();
+  }
+
+  NuevaCancion(){
+    this.router.navigateByUrl("/canciones/"+ this.cancionTipo + "/");
+  }
+  EditarCancion(idCancion:number){
+    this.router.navigateByUrl("/canciones/"+ this.cancionTipo + "/" + idCancion);
   }
 }

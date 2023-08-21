@@ -26,7 +26,7 @@ export class CategoriasService {
   // }
 
   ObtenerCategoriasSelector() {
-    return this.http.get(this.apiUrl + 'categorias/select')
+    return this.http.get(this.apiUrl + 'categorias/ObtenerSelector')
        .toPromise()
        .then((result:any) => {return result;});
   }
