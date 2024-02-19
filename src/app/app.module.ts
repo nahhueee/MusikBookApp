@@ -38,6 +38,8 @@ import { NavegacionComponent } from './components/navegacion/navegacion.componen
 import { PreferenciasComponent } from './components/preferencias/preferencias.component';
 import { CategoriasComponent } from './components/categorias/categorias/categorias.component';
 import { CategoriasAddmodComponent } from './components/categorias/categorias-addmod/categorias-addmod.component';
+import { EliminarComponent } from './components/eliminar/eliminar.component';
+import { CancionVistaComponent } from './components/canciones/cancion-vista/cancion-vista.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { CategoriasAddmodComponent } from './components/categorias/categorias-ad
     NavegacionComponent,
     PreferenciasComponent,
     CategoriasComponent,
-    CategoriasAddmodComponent
+    CategoriasAddmodComponent,
+    EliminarComponent,
+    CancionVistaComponent
   ],
   imports: [
     BrowserModule,

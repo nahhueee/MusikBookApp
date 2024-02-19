@@ -70,8 +70,7 @@ export class CancionDetalleComponent {
   ActualizarArray(_detalles:DetalleCancion){
     this.seccionesCancion = _detalles.secciones;
     this.acordesCancion = _detalles.acordes;
-    console.log(_detalles)
-
+    
     //Llenamos la el form array con los datos de las letras de la cancion obtenidas de la DB
     for (let i = 0; i < this.seccionesCancion.length; i++) {
 

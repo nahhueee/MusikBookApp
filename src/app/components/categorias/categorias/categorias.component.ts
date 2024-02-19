@@ -1,12 +1,17 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { Paginacion } from 'src/app/models/Paginacion';
+import {Router} from "@angular/router";
+
+import { CategoriasService } from 'src/app/services/categorias.service';
 import { Categoria } from 'src/app/models/Categoria';
 import { FiltroGeneral } from 'src/app/models/FiltroGeneral';
-import { Paginacion } from 'src/app/models/Paginacion';
-import { CategoriasService } from 'src/app/services/categorias.service';
+import { CategoriasAddmodComponent } from '../categorias-addmod/categorias-addmod.component';
+import { NotificacionesService } from 'src/app/services/notificaciones.service';
+import { EliminarComponent } from '../../eliminar/eliminar.component';
 
 @Component({
   selector: 'app-categorias',
@@ -22,14 +27,24 @@ export class CategoriasComponent {
 
   @ViewChild(MatPaginator) paginator: MatPaginator; //Para manejar el Paginador del front
   @ViewChild(MatSort) sort: MatSort; //Para manejar el Reordenar del front
-
+  dialogConfig = new MatDialogConfig(); //Creamos un modal para las operaciones ABM
+  
   constructor(
     private categoriasService:CategoriasService,
-    private router: Router){}
+    private Notificaciones:NotificacionesService,
+    private dialog: MatDialog){}
 
+  ngOnInit(){
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.dialogConfig.height = "auto";
+  }
 
   ngAfterViewInit() {
     this.paginator._intl.itemsPerPageLabel = 'Items por página';
+    setTimeout(() => {
+      this.Buscar();
+    }, 0.5);
   }
 
   Buscar(event?: PageEvent){
@@ -85,9 +100,56 @@ export class CategoriasComponent {
   }
 
   NuevaCategoria(){
-    this.router.navigateByUrl("/categorias");
+    this.dialogConfig.width = "400px";
+    this.dialogConfig.data = {categoria:''};
+    this.dialog.open(CategoriasAddmodComponent, this.dialogConfig)
+                .afterClosed()
+                .subscribe((actualizar:boolean) => {
+                  if (actualizar)
+                  this.Buscar(); //Recarga la tabla
+                });;
   }
+  
   EditarCategoria(idCategoria:number){
-    this.router.navigateByUrl("/categorias/"+ idCategoria);
+    this.dialogConfig.width = "400px";
+          this.dialogConfig.data = {categoria:idCategoria} //Pasa como dato el id de cliente
+          this.dialog.open(CategoriasAddmodComponent, this.dialogConfig)
+                  .afterClosed()
+                  .subscribe((actualizar:boolean) => {
+                    if (actualizar)
+                      this.Buscar(); //Recarga la tabla
+                  });
+  }
+
+  EliminarCategoria(idCategoria:number){
+    this.dialogConfig.width = "400px";
+          this.dialogConfig.data = {categoria:idCategoria} //Pasa como dato el id de cliente
+          this.dialog.open(EliminarComponent, this.dialogConfig)
+                  .afterClosed()
+                  .subscribe((confirmado:boolean) => {
+                    if (confirmado){ //Si confirma eliminacion
+
+                      this.categoriasService.Eliminar(idCategoria)
+                      .then(response => {
+                        if(response){
+                          this.Notificaciones.success("Categoria eliminada correctamente");
+                          this.Buscar();
+                        }else{
+                          this.Notificaciones.error("No se pudo eliminar la categoria");
+                        }
+                      }).catch(err => {
+                        console.log(err);
+                      });
+
+                    }
+                  });
+    
+  }
+
+  SetearColorBar(color?:string){
+    return { backgroundColor:color }
+  }
+  SetearColorP(color?:string){
+    return { border:'1px solid ' + color }
   }
 }

@@ -13,3 +13,25 @@
   cursor: pointer;
 }
 
+.short-width{
+  width: 20%;
+}
+
+.color{
+  background-color: var(--color-background);
+  color: var(--color-font);
+  padding: 2px 15px;
+  border-radius: 8px;
+  width: 100%;
+  text-align: center;
+  margin: 0%;
+  z-index: 99;
+  font-size: 14px;
+}
+.color-bar{
+  height: 10px;
+  width: 100%;
+  border-radius: 3px;
+  margin-left: -5px;
+}
+

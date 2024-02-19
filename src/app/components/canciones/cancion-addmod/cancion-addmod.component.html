@@ -1,76 +1,83 @@
-<div class="container">
-  <div class="row">
-    <div class="col-sm-12 col-md-5">
-
-      <div class="cabecera">
-        <mat-icon>library_music</mat-icon>
-        <p>Gestionar Canción</p>
+<app-navegacion></app-navegacion>
+<div class="contenido">
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-5">
+  
+        <div class="cabecera">
+          <mat-icon>library_music</mat-icon>
+          <p>Gestionar Canción</p>
+        </div>
+  
+        <!-- #region DATOS CABECERA CANCION -->
+        <form [formGroup]="formulario" method="POST">
+          <div class="row">
+  
+            <div class="col-sm-12">
+              <!-- Nombre -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nombre</mat-label>
+                <input matInput type="text" formControlName="nombre" class="texto">
+                <mat-error>
+                  Completa con un nombre
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+               <!-- Tonica -->
+               <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Tónica</mat-label>
+                <input matInput type="text" formControlName="tonica">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <!-- BPM -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>BPM</mat-label>
+                <input matInput type="number" formControlName="bpm">
+              </mat-form-field>
+            </div>
+  
+            <div class="col-sm-6">
+              <!--Categoria-->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Categoria</mat-label>
+                <mat-select formControlName="idCategoria">
+                  <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nombre}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <!--Tipo Cancion-->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Tipo Canción</mat-label>
+                <mat-select formControlName="idTipo">
+                  <mat-option *ngFor="let tipos of tiposCancion" [value]="tipos.id">{{tipos.nombre}}</mat-option>
+                </mat-select>
+                <mat-error>
+                  Elige el tipo de canción
+                </mat-error>
+              </mat-form-field>
+            </div>
+  
+          </div>
+  
+          <div class="botones">
+            <button id="btnGuardar" mat-raised-button color="primary" (click)="Guardar()"><mat-icon>save</mat-icon>Guardar</button>
+            <button id="btnCerrar" mat-raised-button color="warn" (click)="Cancelar()"><mat-icon>close</mat-icon>Cerrar</button>
+          </div>
+        </form>
+        <!-- #endregion -->
+    </div>
+  
+      <div class="col-sm-12 col-md-7">
+        <app-cancion-detalle (cancionGuardada)="CancionGuardada($event)"></app-cancion-detalle>
       </div>
-
-      <!-- #region DATOS CABECERA CANCION -->
-      <form [formGroup]="formulario" method="POST">
-        <div class="row">
-
-          <div class="col-sm-12">
-            <!-- Nombre -->
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Nombre</mat-label>
-              <input matInput type="text" formControlName="nombre" class="texto">
-              <mat-error>
-                Completa con un nombre
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-sm-6">
-             <!-- Tonica -->
-             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Tónica</mat-label>
-              <input matInput type="text" formControlName="tonica">
-            </mat-form-field>
-          </div>
-          <div class="col-sm-6">
-            <!-- BPM -->
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>BPM</mat-label>
-              <input matInput type="number" formControlName="bpm">
-            </mat-form-field>
-          </div>
-
-          <div class="col-sm-6">
-            <!--Categoria-->
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Categoria</mat-label>
-              <mat-select formControlName="idCategoria">
-                <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nombre}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-sm-6">
-            <!--Tipo Cancion-->
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Tipo Canción</mat-label>
-              <mat-select formControlName="idTipo">
-                <mat-option *ngFor="let tipos of tiposCancion" [value]="tipos.id">{{tipos.nombre}}</mat-option>
-              </mat-select>
-              <mat-error>
-                Elige el tipo de canción
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-        </div>
-
-        <div class="botones">
-          <button id="btnGuardar" mat-raised-button color="primary" (click)="Guardar()"><mat-icon>save</mat-icon>Guardar</button>
-          <button id="btnCerrar" mat-raised-button color="warn" (click)="Cancelar()"><mat-icon>close</mat-icon>Cerrar</button>
-        </div>
-      </form>
-      <!-- #endregion -->
-  </div>
-
-    <div class="col-sm-12 col-md-7">
-      <app-cancion-detalle (cancionGuardada)="CancionGuardada($event)"></app-cancion-detalle>
     </div>
   </div>
+
 </div>
+
+
 

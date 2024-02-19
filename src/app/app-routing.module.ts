@@ -4,6 +4,7 @@ import { CancionesComponent } from './components/canciones/canciones/canciones.c
 import { CancionAddmodComponent } from './components/canciones/cancion-addmod/cancion-addmod.component';
 import { CategoriasComponent } from './components/categorias/categorias/categorias.component';
 import { CategoriasAddmodComponent } from './components/categorias/categorias-addmod/categorias-addmod.component';
+import { CancionVistaComponent } from './components/canciones/cancion-vista/cancion-vista.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'canciones/:tipo/:cancion',
     component:CancionAddmodComponent,
+  },
+  {
+    path: 'cancion/vista/:cancion',
+    component:CancionVistaComponent,
   },
 
   {

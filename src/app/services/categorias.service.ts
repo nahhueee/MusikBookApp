@@ -32,7 +32,7 @@ export class CategoriasService {
        .then((result:any) => {return result;});
   }
 
-  ObtenerCancion(cancion:number) {
+  ObtenerCategoria(cancion:number) {
     return this.http.get(this.apiUrl + `categorias/ObtenerUna?id=${cancion}`)
        .toPromise()
        .then((result:any) => {return result;});
@@ -48,6 +48,7 @@ export class CategoriasService {
 
   //#region ABM
   Agregar(categoria:Categoria){
+    console.log(categoria)
     return this.http.post(this.apiUrl + 'categorias/agregar', categoria)
     .toPromise()
     .then((result:any) => {return result;});
@@ -60,7 +61,7 @@ export class CategoriasService {
   }
 
   Eliminar(id?:number){
-    return this.http.delete(this.apiUrl + `categorias/eliminar/${id}`)
+    return this.http.delete(this.apiUrl + `categorias/eliminar?id=${id}`)
        .toPromise()
        .then((result:any) => {return result;});
   }

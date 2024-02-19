@@ -1,0 +1,61 @@
+<div class="cabecera">
+    <div class="detalles">
+        <p>{{cancion.nombre}}</p> 
+        |
+        <span>{{cancion.tonica}} - {{cancion.bpm}}</span>
+        <div class="categoria" [ngStyle]="{ border:'2px solid ' + cancion.categoria?.color }">
+            {{cancion.categoria?.nombre}}
+        </div>
+    </div>
+    <div class="opciones">
+        <div class="boton" (click)="VerAcordeLetra()" matTooltip="Letra y Acorde" [ngClass]="{active: vAcorde&&vLetra}">
+            <mat-icon>menu_book</mat-icon> 
+        </div>
+        <div class="boton" (click)="VerLetra()" matTooltip="Solo Letra" [ngClass]="{active: !vAcorde&&vLetra}">
+            <mat-icon>sort_by_alpha</mat-icon> 
+        </div>
+        <div class="boton" (click)="VerAcorde()" matTooltip="Solo Acordes" [ngClass]="{active: vAcorde&&!vLetra}">
+            <mat-icon>music_note</mat-icon>
+        </div>
+    </div>
+    
+</div>
+<div class="contenido">
+    <div class="letras">
+        <div *ngFor="let seccion of cancion.detalles?.secciones; let i = index" class="seccion">
+            <p class="titulos">{{seccion.tipoSeccion}}</p>
+              
+            <!-- Letra -->
+            <div *ngFor="let renglon of ObtenerRenglonesTexto(seccion.letra); let i_renglon = index">
+                <div *ngIf="vAcorde&&vLetra" class="cuadricula">
+    
+                    <div class="cuadro" *ngFor="let cuadro of [].constructor(renglon.length + 2); let i_cuadro = index">
+                        <!-- Revisa si en esta coordenada con la posicion de la seccion existe acorde -->
+                        <!-- Span +, representa un lugar donde puedo agregar un acorde -->
+                        <span *ngIf="ObtenerIndexUbicacion(seccion.posicion, i_renglon, i_cuadro)==-1" class="no-acorde">+</span>
+        
+                        <div *ngIf="indiceAcorde!=-1">
+                            <!-- Agrego una letra detras del acorde para mantener la posicion de los demas "No-acorde" -->
+                            <span class="no-acorde">N</span> 
+
+                            <!-- Muestro el acorde encontrado en la posición por sobre el span "N" -->
+                            <span class="acorde">{{AcordesCancion[indiceAcorde].acorde}}</span>
+                        </div>
+                    </div>
+    
+                </div>
+
+                <div *ngIf="vAcorde&&!vLetra" class="sAcorde-cont">
+                    <div *ngFor="let cuadro of [].constructor(renglon.length + 2); let i_cuadro = index">
+                        <span *ngIf="ObtenerAcordeRenglon(seccion.posicion, i_renglon, i_cuadro)!=''" class="sAcorde">{{acordeRenglon}}</span>
+                    </div>
+                </div>
+    
+                <!-- Agrego una letra al inicio y al final del renglon, para poder tener dos espacios mas a los costados -->
+                <p *ngIf="vLetra" class="renglon"><span>R</span>{{renglon}}<span>R</span></p>
+            </div>
+
+
+          </div>
+    </div>
+</div>

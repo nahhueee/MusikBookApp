@@ -14,7 +14,7 @@ $red-theme-dark: mat.define-dark-theme((color: (primary: $red-primary, accent: $
   @include angular-material-color($red-theme);
   --color-primary: #{mat.get-color-from-palette($red-primary)};
   --color-accent: #{mat.get-color-from-palette($red-accent)};
-  --color-background: #f1f1f1;
+  --color-background: #f8f8f8;
   --color-font: #3f3f3f;
 }
 .red-theme-dark{
@@ -37,7 +37,7 @@ $pink-theme-dark: mat.define-dark-theme((color: (primary: $pink-primary, accent:
   @include angular-material-color($pink-theme);
   --color-primary: #{mat.get-color-from-palette($pink-primary)};
   --color-accent: #{mat.get-color-from-palette($pink-accent)};
-  --color-background: #f1f1f1;
+  --color-background: #f8f8f8;
   --color-font: #3f3f3f;
 }
 .pink-theme-dark{
@@ -60,7 +60,7 @@ $blue-theme-dark: mat.define-dark-theme((color: (primary: $blue-primary, accent:
   @include angular-material-color($blue-theme);
   --color-primary: #{mat.get-color-from-palette($blue-primary)};
   --color-accent: #{mat.get-color-from-palette($blue-accent)};
-  --color-background: #f1f1f1;
+  --color-background: #f8f8f8;
   --color-font: #3f3f3f;
 }
 .blue-theme-dark{
@@ -83,7 +83,7 @@ $green-theme-dark: mat.define-dark-theme((color: (primary: $green-primary, accen
   @include angular-material-color($green-theme);
   --color-primary: #{mat.get-color-from-palette($green-primary)};
   --color-accent: #{mat.get-color-from-palette($green-accent)};
-  --color-background: #f1f1f1;
+  --color-background: #f8f8f8;
   --color-font: #3f3f3f;
 }
 .green-theme-dark{

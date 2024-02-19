@@ -95,11 +95,12 @@ export class CancionAddmodComponent {
   ObtenerCancion(idCancion:number){
     this.cancionService.ObtenerCancion(idCancion)
       .then(response => {
+        console.log(response)
         this.cancion.id = idCancion;
         this.formulario.get('nombre')?.setValue(response.nombre);
         this.formulario.get('tonica')?.setValue(response.tonica);
         this.formulario.get('bpm')?.setValue(response.bpm);
-        this.formulario.get('idCategoria')?.setValue(response.idCategoria);
+        this.formulario.get('idCategoria')?.setValue(response.categoria.id);
 
         //Envia al componente cancion-detalle los acordes y secciones
         this.ComponenteDetallesCancion.ActualizarArray(response.detalles);
@@ -113,8 +114,11 @@ export class CancionAddmodComponent {
     this.cancion.nombre =  this.formulario.get('nombre')?.value;
     this.cancion.tonica =  this.formulario.get('tonica')?.value;
     this.cancion.bpm =  this.formulario.get('bpm')?.value;
-    this.cancion.idCategoria = this.formulario.get('idCategoria')?.value;
     this.cancion.idTipoCancion = this.formulario.get('idTipo')?.value;
+
+    let categoria = new Categoria();
+    categoria.id = this.formulario.get('idCategoria')?.value;
+    this.cancion.categoria = categoria;
     
     if(this.cancion.id==0){ //Insertamos una nueva cancion
 

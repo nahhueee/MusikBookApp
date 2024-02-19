@@ -19,7 +19,7 @@ export class CancionesComponent {
   canciones: Cancion[] =[];
   cancionTipo: number;
 
-  displayedColumns: string[] = ['nombre', 'tonica', 'bpm', 'id']; //Columnas a mostrar
+  displayedColumns: string[] = ['nombre', 'tonica', 'bpm', 'categoria', 'id']; //Columnas a mostrar
   dataSource = new MatTableDataSource<Cancion>(this.canciones); //Data source de la tabla
 
   @ViewChild(MatPaginator) paginator: MatPaginator; //Para manejar el Paginador del front
@@ -35,6 +35,7 @@ export class CancionesComponent {
   }
 
   Buscar(event?: PageEvent, tipoCancion?:any){
+    console.log("Hola Cancion")
     this.cancionTipo = tipoCancion.id;
 
     if (!event) {
@@ -65,6 +66,7 @@ export class CancionesComponent {
         this.cancionesService.ObtenerCanciones(filtroCanciones)
         .then(response => {
 
+          console.log(response)
           //Llenamos la tabla con los resultados
           this.canciones = [];
           for (let i = 0; i < response.length; i++) {
@@ -94,5 +96,17 @@ export class CancionesComponent {
   }
   EditarCancion(idCancion:number){
     this.router.navigateByUrl("/canciones/"+ this.cancionTipo + "/" + idCancion);
+  }
+  VerCancion(idCancion:number){
+    //this.router.navigateByUrl("/canciones/vista/"+ idCancion, '_blank');
+    window.open('/cancion/vista/'+ idCancion, '_blank');
+  }
+
+
+  SetearColorBar(color?:string){
+    return { backgroundColor:color }
+  }
+  SetearColorP(color?:string){
+    return { border:'1px solid ' + color }
   }
 }

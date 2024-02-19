@@ -1,1 +1,29 @@
-<p>categorias-addmod works!</p>
+<div class="cabecera">
+    <mat-icon>interests</mat-icon>
+    <p>{{titulo}}</p>
+</div>
+<mat-dialog-content class="mat-typography" align="center"> 
+    <form [formGroup]="formulario" method="POST">
+
+        <!-- Nombre -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre</mat-label>
+          <input matInput type="text" formControlName="nombre" class="texto">
+          <mat-error>
+            Completa con un nombre
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Color -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Color</mat-label>
+          <input matInput type="color" formControlName="color" class="color">
+        </mat-form-field>
+  
+      </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+<button class="btn-action" mat-flat-button color="primary" [disabled]="!formulario.valid" [mat-dialog-close]="true" (click)='modificando? Modificar() : Agregar()'>GUARDAR</button>
+<button class="btn-action" mat-flat-button color="warn" cdkFocusInitial mat-dialog-close>CANCELAR</button>
+</mat-dialog-actions>
